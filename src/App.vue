@@ -10,11 +10,31 @@
     },
     mounted() {
       this.map = new maplibregl.Map({
-          container: 'map', // container id
-          style: 'https://demotiles.maplibre.org/globe.json', // style URL
-          center: [0, 0], // starting position [lng, lat]
-          zoom: 1 // starting zoom
-      })
+        container: 'map', // container id
+        style: {
+            'version': 8,
+            'sources': {
+                'raster-tiles': {
+                    'type': 'raster',
+                    'tiles': ['https://tile.openstreetmap.org/{z}/{x}/{y}.png'],
+                    'tileSize': 256,
+                    'minzoom': 0,
+                    'maxzoom': 19
+                }
+            },
+            'layers': [
+                {
+                    'id': 'simple-tiles',
+                    'type': 'raster',
+                    'source': 'raster-tiles',
+                    'attribution': "© OpenStreetMap contributors",
+                }
+            ],
+            'id': 'blank'
+        },
+        center: [0, 0], // starting position
+        zoom: 0 // starting zoom
+    });
     }
   }
 </script>
@@ -23,14 +43,8 @@
   <div id="map"></div>
 </template>
 
-<style scoped>
-#map {
-  width: 100%;
-  height: 100vh;
-}
-
-canvas {
-width: 100%;
-height: 100vh;
-}
+<style>
+body { margin: 0; padding: 0; }
+html, body { height: 100%; }
+#map {width: 100%; height: 100vh;} 
 </style>
