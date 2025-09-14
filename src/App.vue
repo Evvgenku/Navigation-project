@@ -1,11 +1,36 @@
-<script setup></script>
+<script>
+  import maplibregl from 'maplibre-gl';
+  import 'maplibre-gl/dist/maplibre-gl.css'
 
+  export default {
+    data() {
+      return {
+        map: null
+      }
+    },
+    mounted() {
+      this.map = new maplibregl.Map({
+          container: 'map', // container id
+          style: 'https://demotiles.maplibre.org/globe.json', // style URL
+          center: [0, 0], // starting position [lng, lat]
+          zoom: 1 // starting zoom
+      })
+    }
+  }
+</script>
+  
 <template>
-  <h1>You did it!</h1>
-  <p>
-    Visit <a href="https://vuejs.org/" target="_blank" rel="noopener">vuejs.org</a> to read the
-    documentation
-  </p>
+  <div id="map"></div>
 </template>
 
-<style scoped></style>
+<style scoped>
+#map {
+  width: 100%;
+  height: 100vh;
+}
+
+canvas {
+width: 100%;
+height: 100vh;
+}
+</style>
