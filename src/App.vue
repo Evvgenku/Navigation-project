@@ -1,50 +1,39 @@
 <script>
-  import maplibregl from 'maplibre-gl';
-  import 'maplibre-gl/dist/maplibre-gl.css'
+  import Map from './components/map/Map.vue';
 
   export default {
     data() {
       return {
-        map: null
+
       }
     },
-    mounted() {
-      this.map = new maplibregl.Map({
-        container: 'map', // container id
-        style: {
-            'version': 8,
-            'sources': {
-                'raster-tiles': {
-                    'type': 'raster',
-                    'tiles': ['https://tile.openstreetmap.org/{z}/{x}/{y}.png'],
-                    'tileSize': 256,
-                    'minzoom': 0,
-                    'maxzoom': 19
-                }
-            },
-            'layers': [
-                {
-                    'id': 'simple-tiles',
-                    'type': 'raster',
-                    'source': 'raster-tiles',
-                    'attribution': "© OpenStreetMap contributors",
-                }
-            ],
-            'id': 'blank'
-        },
-        center: [0, 0], // starting position
-        zoom: 0 // starting zoom
-    });
-    }
+    components: {Map}
   }
 </script>
   
 <template>
-  <div id="map"></div>
+  <div>
+    <div class="menu">
+      <button>Меню</button>
+    </div>
+    <div class="myPosition">
+      <button>Я</button>
+    </div>
+    <Map />
+  </div>
 </template>
 
 <style>
-body { margin: 0; padding: 0; }
-html, body { height: 100%; }
-#map {width: 100%; height: 100vh;} 
+  .menu {
+    position: fixed;
+    bottom: 5%;
+    left: 5%;
+    z-index: 1;
+  }
+  .myPosition {
+    position: fixed;
+    bottom: 5%;
+    right: 5%;
+    z-index: 1;
+  }
 </style>
