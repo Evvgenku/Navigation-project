@@ -1,11 +1,40 @@
 <script>
   import maplibregl from 'maplibre-gl';
-  import 'maplibre-gl/dist/maplibre-gl.css'
+  import 'maplibre-gl/dist/maplibre-gl.css';
+  import Menu from './menu/Menu.vue';
+  import MapControls from './mapControls/MapControls.vue';
 
   export default {
     data() {
       return {
-        map: null
+        map: null,
+        latitude: '',
+        longitude: ''
+      }
+    },
+    components: {
+      Menu,
+      MapControls
+    },
+    methods: {
+      zoomIn() {
+        this.map.zoomIn({duration: 1000})
+      },
+      zoomOut() {
+        this.map.zoomOut({duration: 1000})
+      },
+      getUserPosition() {
+        if (!navigator.geolocation) {
+          console.log('Без доступа к геолокации не определить местоположение')
+        } else {
+          navigator.geolocation.getCurrentPosition(pos => {
+            let {latitude, longitude} = pos.coords
+            this.latitude = latitude
+            this.longitude = longitude
+            console.log(this.latitude, this.longitude) // Проверка, что координаты получены
+          }, error => alert('Для определения местонахождения нужен доступ к геолокации') //Переделать в попап
+          )
+        }
       }
     },
     mounted() {
@@ -41,6 +70,8 @@
   
 <template>
   <div id="map"></div>
+  <Menu />
+  <MapControls :zoomIn="zoomIn" :zoomOut="zoomOut" :getUserPosition="getUserPosition"/>
 </template>
 
 <style>
