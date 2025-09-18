@@ -13,13 +13,16 @@
     },
     props: {
         zoomIn: {
-            type: Function
+          type: Function
         },
         zoomOut: {
-            type: Function
+          type: Function
         },
         getUserPosition: {
-            type: Function
+          type: Function
+        },
+        moveToUser: {
+          type: Function
         }
     }
   }
@@ -29,7 +32,7 @@
     <div class="zoom">
       <div class="button plus" @click="zoomIn()"><img :src="plus"/></div>
       <div class="button minus" @click="zoomOut()"><img :src="minus"/></div>
-      <div class="button myPosition" @click="getUserPosition()"><img :src="myPosition"/></div>
+      <div class="button myPosition" @click="getUserPosition(); moveToUser()"><img :src="myPosition"/></div>
     </div>
 </template>
 

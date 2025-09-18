@@ -3,13 +3,16 @@
   import 'maplibre-gl/dist/maplibre-gl.css';
   import Menu from './menu/Menu.vue';
   import MapControls from './mapControls/MapControls.vue';
+  import customUserMarker from './images/UserPosition.svg'
 
   export default {
     data() {
       return {
         map: null,
         latitude: '',
-        longitude: ''
+        longitude: '',
+        customUserMarker,
+        marker: null
       }
     },
     components: {
@@ -24,17 +27,19 @@
         this.map.zoomOut({duration: 1000})
       },
       getUserPosition() {
-        if (!navigator.geolocation) {
-          console.log('Без доступа к геолокации не определить местоположение')
-        } else {
-          navigator.geolocation.getCurrentPosition(pos => {
-            let {latitude, longitude} = pos.coords
-            this.latitude = latitude
-            this.longitude = longitude
-            console.log(this.latitude, this.longitude) // Проверка, что координаты получены
-          }, error => alert('Для определения местонахождения нужен доступ к геолокации') //Переделать в попап
-          )
-        }
+        navigator.geolocation.watchPosition(pos => {
+          const {latitude, longitude} = pos.coords
+          this.latitude = latitude
+          this.longitude = longitude
+          console.log(this.latitude, this.longitude)
+          this.marker.setLngLat([this.longitude, this.latitude])
+        });
+      },
+      moveToUser() {
+        this.map.flyTo({
+          center: [this.longitude, this.latitude],
+          zoom: 15
+        })
       }
     },
     mounted() {
@@ -63,7 +68,8 @@
         },
         center: [46.0951801, 51.4988643], // starting position
         zoom: 12 // starting zoom
-    });
+    }),
+    this.marker = new maplibregl.Marker({element: document.getElementById('custom-marker')}).setLngLat(['', '']).addTo(this.map)
     }
   }
 </script>
@@ -71,10 +77,16 @@
 <template>
   <div id="map"></div>
   <Menu />
-  <MapControls :zoomIn="zoomIn" :zoomOut="zoomOut" :getUserPosition="getUserPosition"/>
+  <MapControls :zoomIn="zoomIn" :zoomOut="zoomOut" :getUserPosition="getUserPosition" :moveToUser="moveToUser"/>
+  <div id="custom-marker"><img :src="customUserMarker"/></div>
 </template>
 
 <style>
     body { margin: 0; padding: 0; }
-    #map {width: 100vw; height: 100vh;} 
+    #map {width: 100vw; height: 100vh;}
+    img {
+    height: 25px;
+    width: 25px;
+    opacity: 0.7;
+  }
 </style>
