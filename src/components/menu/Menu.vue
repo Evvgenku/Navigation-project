@@ -6,17 +6,46 @@
       return {
         menu
       }
+    },
+    props: {
+      toggleBurgerMenu: {
+        type: Function
+      },
+      burgerIsOpen: {
+        type: Boolean
+      }
     }
   }
 </script>
   
 <template>
     <div class="menu-container">
-      <div class="button menu"><img :src="menu"/></div>
+      <div class="button menu" @click="toggleBurgerMenu()"><img :src="menu"/></div>
+      <div :class="{}" v-show="burgerIsOpen">
+        <div>Мои маркеры</div>
+      </div>
     </div>
 </template>
 
 <style scoped>
+  .burger-menu {
+    height: 80vh;
+    width: 20vw;
+    background: rgb(236, 255, 232);
+    position: fixed;
+    z-index: 1;
+    bottom: 10vh;
+    left: 10px;
+    border-radius: 10px;
+    border: 1px solid rgb(159, 181, 154);
+    transform: translateX(-150%);
+    transition: transform 3s;
+  }
+
+  .slide-menu {
+    transform: translateX(0);
+  }
+
   .menu {
     position: fixed;
     bottom: 5%;

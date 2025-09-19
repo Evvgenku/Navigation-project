@@ -1,7 +1,6 @@
 <script>
   import maplibregl from 'maplibre-gl';
   import 'maplibre-gl/dist/maplibre-gl.css';
-  import Menu from './menu/Menu.vue';
   import MapControls from './mapControls/MapControls.vue';
   import customUserMarker from './images/UserPosition.svg'
 
@@ -16,7 +15,6 @@
       }
     },
     components: {
-      Menu,
       MapControls
     },
     methods: {
@@ -31,15 +29,31 @@
           const {latitude, longitude} = pos.coords
           this.latitude = latitude
           this.longitude = longitude
-          console.log(this.latitude, this.longitude)
+          console.log(this.longitude, this.latitude)
+          //Проверяет что маркер не существует и создет его и перемещает экран к нему
+          if (!this.marker) {
+            this.marker = new maplibregl.Marker({element: document.getElementById('custom-marker')}).setLngLat([this.longitude, this.latitude]).addTo(this.map);
+            this.moveToUser();
+          };
           this.marker.setLngLat([this.longitude, this.latitude])
+        }, error => {
+          alert('Нет доступа к геолокации');
+          if (this.marker) {
+            //Удалить маркер с карты
+            this.marker.remove();
+            //Не перемещать карту к последнему местоположению
+            this.marker = null;
+          }
         });
       },
       moveToUser() {
-        this.map.flyTo({
-          center: [this.longitude, this.latitude],
-          zoom: 15
+        //Если маркер существует, то перемещает к нему
+        if (this.marker) {
+          this.map.flyTo({
+            center: [this.longitude, this.latitude],
+            zoom: 15
         })
+        }
       }
     },
     mounted() {
@@ -68,17 +82,17 @@
         },
         center: [46.0951801, 51.4988643], // starting position
         zoom: 12 // starting zoom
-    }),
-    this.marker = new maplibregl.Marker({element: document.getElementById('custom-marker')}).setLngLat(['', '']).addTo(this.map)
+    })
     }
   }
 </script>
   
 <template>
-  <div id="map"></div>
-  <Menu />
+  <div id="map">
+    <!-- Сдеать динамически создаваемым -->
+    <div id="custom-marker"><img :src="customUserMarker"/></div>
+  </div>
   <MapControls :zoomIn="zoomIn" :zoomOut="zoomOut" :getUserPosition="getUserPosition" :moveToUser="moveToUser"/>
-  <div id="custom-marker"><img :src="customUserMarker"/></div>
 </template>
 
 <style>
