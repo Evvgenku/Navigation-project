@@ -2,7 +2,8 @@
   import maplibregl from 'maplibre-gl';
   import 'maplibre-gl/dist/maplibre-gl.css';
   import MapControls from './mapControls/MapControls.vue';
-  import customUserMarker from './images/UserPosition.svg'
+  import customUserMarker from './images/UserPosition.svg';
+  import satelliteMap from './assets/mapConfigs'
 
   export default {
     data() {
@@ -11,7 +12,8 @@
         latitude: '',
         longitude: '',
         customUserMarker,
-        marker: null
+        marker: null,
+        satelliteMap
       }
     },
     components: {
@@ -55,6 +57,9 @@
             zoom: 17
         })
         }
+      },
+      setMapStyle(mapStyle) {
+        this.map.setStyle(mapStyle)
       }
     },
     mounted() {
