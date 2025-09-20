@@ -47,7 +47,6 @@
     align-items: center;
     text-align: center;
     list-style-type: none;
-
   }
 
   li {
