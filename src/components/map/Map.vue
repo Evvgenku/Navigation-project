@@ -36,6 +36,7 @@
             this.moveToUser();
           };
           this.marker.setLngLat([this.longitude, this.latitude])
+          this.map.setCenter([this.longitude, this.latitude])
         }, error => {
           alert('Нет доступа к геолокации');
           if (this.marker) {
@@ -51,7 +52,7 @@
         if (this.marker) {
           this.map.flyTo({
             center: [this.longitude, this.latitude],
-            zoom: 15
+            zoom: 17
         })
         }
       }

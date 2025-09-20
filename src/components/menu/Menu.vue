@@ -21,25 +21,41 @@
 <template>
     <div class="menu-container">
       <div class="button menu" @click="toggleBurgerMenu()"><img :src="menu"/></div>
-      <div :class="{}" v-show="burgerIsOpen">
-        <div>Мои маркеры</div>
+      <div :class="['burger-menu', {'slide-menu': burgerIsOpen}]">
+        <li>Мои маркеры</li>
+        <li>Еще элемент списка</li>
+        <li>И еще</li>
       </div>
     </div>
 </template>
 
 <style scoped>
   .burger-menu {
-    height: 80vh;
-    width: 20vw;
-    background: rgb(236, 255, 232);
+    height: 400px;
+    width: 200px;
+    background: rgba(225, 225, 225, 0.9);
     position: fixed;
     z-index: 1;
-    bottom: 10vh;
+    bottom: 30vh;
     left: 10px;
     border-radius: 10px;
-    border: 1px solid rgb(159, 181, 154);
+    border: 1px solid rgba(164, 164, 164, 0.9);
     transform: translateX(-150%);
-    transition: transform 3s;
+    transition: transform 1s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    list-style-type: none;
+
+  }
+
+  li {
+    height: 20px;
+    width: 190px;
+    background: rgba(209, 208, 208, 0.9);
+    border: 1px solid rgba(164, 164, 164, 0.9);
+    margin-top: 10px;
   }
 
   .slide-menu {
