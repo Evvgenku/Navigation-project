@@ -1,10 +1,16 @@
 <script>
   import menu from './images/menu.png'
+  import contourLines from './images/ContourLines.png'
+  import satellite from './images/Satellite.png'
+  import scheme from './images/Scheme.png'
 
   export default {
     data() {
       return {
-        menu
+        menu,
+        contourLines,
+        satellite,
+        scheme
       }
     },
     props: {
@@ -20,16 +26,35 @@
   
 <template>
     <div class="menu-container">
-      <div class="button menu" @click="toggleBurgerMenu()"><img :src="menu"/></div>
+      <div class="button menu" @click="toggleBurgerMenu()"><img class="imgButton" :src="menu"/></div>
       <div :class="['burger-menu', {'slide-menu': burgerIsOpen}]">
         <li>Мои маркеры</li>
         <li>Еще элемент списка</li>
         <li>И еще</li>
+        <div class="mapStyle-container">
+          <div class="mapStyle"><img class="mapViewButtons" :src="scheme"/></div>
+          <div class="mapStyle"><img class="mapViewButtons" :src="satellite"/></div>
+          <div class="mapStyle"><img class="mapViewButtons" :src="contourLines"/></div>
+        </div>
       </div>
     </div>
 </template>
 
 <style scoped>
+  .mapStyle-container {
+    position: absolute;
+    bottom: 10px;
+    display: flex;
+    justify-content: space-around;
+    width: 200px;
+  }
+  .mapStyle {
+    border: 1px solid rgba(164, 164, 164, 0.9);
+    border-radius: 10px;
+    height: 40px;
+    width: 40px;
+  }
+
   .burger-menu {
     height: 400px;
     width: 200px;
@@ -88,9 +113,24 @@
     opacity: 0.4;
   }
 
-  img {
+  .imgButton {
     height: 25px;
     width: 25px;
     opacity: 0.7;
+  }
+
+  .mapViewButtons {
+    height: 40px;
+    width: 40px;
+    opacity: 1;
+    border-radius: 10px;
+  }
+
+  .mapViewButtons:hover {
+    transform: scale(1.2);
+  }
+
+  .mapViewButtons:active {
+    opacity: 0.4;
   }
 </style>
