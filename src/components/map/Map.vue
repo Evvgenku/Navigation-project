@@ -3,7 +3,8 @@
   import 'maplibre-gl/dist/maplibre-gl.css';
   import MapControls from './mapControls/MapControls.vue';
   import customUserMarker from './images/UserPosition.svg';
-  import satelliteMap from './assets/mapConfigs'
+  import { mapState } from 'pinia';
+  import { useMapStyleStore } from '@/store/mapStyle';
 
   export default {
     data() {
@@ -12,8 +13,7 @@
         latitude: '',
         longitude: '',
         customUserMarker,
-        marker: null,
-        satelliteMap
+        marker: null
       }
     },
     components: {
@@ -57,9 +57,14 @@
             zoom: 17
         })
         }
-      },
-      setMapStyle(mapStyle) {
-        this.map.setStyle(mapStyle)
+      }
+    },
+    computed: {
+      ...mapState(useMapStyleStore, ['currentStyle'])
+    },
+    watch: {
+      currentStyle(newStyle) {
+        this.map.setStyle(newStyle)
       }
     },
     mounted() {

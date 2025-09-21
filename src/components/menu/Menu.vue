@@ -3,6 +3,11 @@
   import contourLines from './images/ContourLines.png'
   import satellite from './images/Satellite.png'
   import scheme from './images/Scheme.png'
+  import {satelliteMap} from '../map/assets/mapConfigs'
+  import {hillShade} from '../map/assets/mapConfigs'
+  import {raster} from '../map/assets/mapConfigs'
+  import { mapActions } from 'pinia'
+  import { useMapStyleStore } from '@/store/mapStyle'
 
   export default {
     data() {
@@ -10,8 +15,14 @@
         menu,
         contourLines,
         satellite,
-        scheme
+        scheme,
+        raster,
+        satelliteMap,
+        hillShade
       }
+    },
+    methods: {
+      ...mapActions(useMapStyleStore, ['setMapStyle'])
     },
     props: {
       toggleBurgerMenu: {
@@ -32,9 +43,9 @@
         <li>Еще элемент списка</li>
         <li>И еще</li>
         <div class="mapStyle-container">
-          <div class="mapStyle"><img class="mapViewButtons" :src="scheme"/></div>
-          <div class="mapStyle"><img class="mapViewButtons" :src="satellite"/></div>
-          <div class="mapStyle"><img class="mapViewButtons" :src="contourLines"/></div>
+          <div class="mapStyle"><img class="mapViewButtons" :src="scheme" @click="this.setMapStyle(raster)"/></div>
+          <div class="mapStyle"><img class="mapViewButtons" :src="satellite" @click="this.setMapStyle(satelliteMap)"/></div>
+          <div class="mapStyle"><img class="mapViewButtons" :src="contourLines" @click="this.setMapStyle(hillShade)"/></div>
         </div>
       </div>
     </div>
