@@ -70,6 +70,7 @@
     mounted() {
       this.map = new maplibregl.Map({
         container: 'map', // container id
+        maxZoom: 17,
         style: {
             'version': 8,
             'sources': {
@@ -78,7 +79,7 @@
                     'tiles': ['https://tile.openstreetmap.org/{z}/{x}/{y}.png'],
                     'tileSize': 256,
                     'minzoom': 0,
-                    'maxzoom': 19
+                    'maxzoom': 20
                 }
             },
             'layers': [
@@ -87,6 +88,7 @@
                     'type': 'raster',
                     'source': 'raster-tiles',
                     'attribution': "© OpenStreetMap contributors",
+                    'maxzoom': 20
                 }
             ],
             'id': 'blank'

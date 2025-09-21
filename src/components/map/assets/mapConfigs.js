@@ -17,29 +17,26 @@ export const satelliteMap = {
 };
 
 export const hillShade = {
-    version: 8,
-    sources: {
-        hillshadeSource: {
-            type: 'raster-dem',
-            url: 'https://demotiles.maplibre.org/terrain-tiles/tiles.json',
-            tileSize: 256
-        }
-    },
-    layers: [
-        {
-            id: 'hillshade',
-            type: 'hillshade',
-            source: 'hillshadeSource',
-            paint: {
-                'hillshade-method': 'standard',
-                'hillshade-illumination-direction': 315,
-                'hillshade-shadow-color': '#000000',
-                'hillshade-highlight-color': '#FFFFFF',
-                'hillshade-accent-color': '#000000',
-                'hillshade-exaggeration': 0.5
-            }
-        }
-    ]
+  version: 8,
+  sources: {
+    cycle: {
+      type: 'raster',
+      tiles: [
+        'https://tile.thunderforest.com/cycle/{z}/{x}/{y}.png?apikey=39a2634765da436f9bfcc5549dfe15ed'
+      ],
+      tileSize: 256,
+      attribution: '© Thunderforest, © OpenStreetMap contributors'
+    }
+  },
+  layers: [
+    {
+      id: 'cycle',
+      type: 'raster',
+      source: 'cycle',
+      minzoom: 0,
+      maxzoom: 22
+    }
+  ]
 };
 
 export const raster = {
@@ -50,7 +47,7 @@ export const raster = {
             'tiles': ['https://tile.openstreetmap.org/{z}/{x}/{y}.png'],
             'tileSize': 256,
             'minzoom': 0,
-            'maxzoom': 19
+            'maxzoom': 20
         }
     },
     'layers': [
@@ -63,3 +60,28 @@ export const raster = {
     ],
     'id': 'blank'
 }
+
+// {
+//     version: 8,
+//     sources: {
+//       opentopo: {
+//         type: 'raster',
+//         tiles: [
+//           'https://a.tile.opentopomap.org/{z}/{x}/{y}.png',
+//           'https://b.tile.opentopomap.org/{z}/{x}/{y}.png',
+//           'https://c.tile.opentopomap.org/{z}/{x}/{y}.png'
+//         ],
+//         tileSize: 256,
+//         attribution: 'Map data: © OpenStreetMap contributors, SRTM | Map style: © OpenTopoMap (CC-BY-SA)'
+//       }
+//     },
+//     layers: [
+//       {
+//         id: 'opentopo',
+//         type: 'raster',
+//         source: 'opentopo',
+//         minzoom: 0,
+//         maxzoom: 20
+//       }
+//     ]
+//   }
